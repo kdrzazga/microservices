@@ -1,3 +1,8 @@
 setuptools>=65.5.0
 PyYAML>=6.0
 pytest>=7.3.0
+Flask>=2.2.3
+loguru>=0.7.0
+flask_httpauth
+gunicorn
+requests>=2.26.0

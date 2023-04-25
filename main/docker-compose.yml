@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  core:
+    build:
+      context: ./
+      dockerfile: core/Dockerfile
+    ports:
+      - "5955:5955"
+      - "5957:5957"
+      - "5981:5981"
+
+  aux_img:
+    build:
+      context: ./
+      dockerfile: ./aux_img/Dockerfile
+    ports:
+      - "6011:6011"
