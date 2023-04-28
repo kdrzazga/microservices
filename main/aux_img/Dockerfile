@@ -12,13 +12,16 @@ RUN apk add --no-cache bash python3 py3-pip && \
     ln -s -f /usr/bin/pip3 /usr/bin/pip
 
 # Install required Python packages
-RUN pip install flask
+RUN pip install flask loguru # supervisor
 
 # Copy the Flask app code into the container
 COPY aux_img/credit_score.py .
+#COPY credit_score.py .
 
-# Expose port 5000 for the Flask app to listen on
-EXPOSE 5000
+# Expose port 6011 for the Flask app to listen on
+EXPOSE 6011
 
-# Start the Flask app using gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "credit_score:app"]
+# Configure Supervisord
+#COPY supervisord.conf /etc/supervisord.conf
+#CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["python", "credit_score.py"]

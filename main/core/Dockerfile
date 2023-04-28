@@ -14,7 +14,7 @@ RUN apk add --no-cache bash python3 py3-pip && \
     ln -s -f /usr/bin/python3 /usr/bin/python && \
     ln -s -f /usr/bin/pip3 /usr/bin/pip
 
-RUN pip install flask flask_httpauth gunicorn pyyaml loguru
+RUN pip install flask flask_httpauth gunicorn pyyaml loguru collections #request?
 
 # Copy the source code for the Flask apps into the container
 COPY core/cards.yml ./
