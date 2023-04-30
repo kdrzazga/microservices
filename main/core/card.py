@@ -13,7 +13,7 @@ users = {
     "admin": "admin"
 }
 
-recently_deleted = {}
+recently_deleted = []
 protected = {1234}
 
 basic_auth = HTTPBasicAuth()
@@ -31,7 +31,7 @@ def serve_page():
 
 
 @app.route('/read/<card_id>', methods=['GET'])
-def read_card_old() -> Response:
+def read_card_old(*args, **kwargs) -> Response:
     message = "Info about cards available at /<card_type>/<card_id>"
     logger.warning(message)
     return jsonify(message), 308, {'Content-Type': 'application/json'}  # 308 permanent redirect
@@ -62,9 +62,9 @@ def create_credit_card(name, customer_name, account_ref, issue_date=None, file_p
     return jsonify('Card created id=' + str(new_id)), 201, {'Content-Type': 'application/json'}  # 201 Created
 
 
-@app.route('/delete/<card-type>/<id>', methods=['DELETE'])
+@app.route('/delete/<card_type>/<card_id>', methods=['DELETE'])
 @basic_auth.login_required
-def delete_credit_card(card_id, card_type) -> Response:
+def delete_card(card_id, card_type) -> Response:
     if card_id in protected:
         message = "No authorization to delete card[id = " + str(card_id) + "]. No one can delete it."
         logger.info(message)

@@ -1,9 +1,8 @@
 import json
 
+import yaml
 from flask import Flask, jsonify
 from loguru import logger
-
-from src.microservice.three_microservices.libraries import Libs
 
 SERVICE_NAME = 'COUNTRY'
 app = Flask(__name__)
@@ -46,5 +45,10 @@ def _get_data():
 
 
 if __name__ == '__main__':
-    _port = int(Libs().read_configuration().get('country').split(":")[-1])
-    app.run(port=_port)
+    config_file = r"..\..\resources\configuration.yml"  # provide the file path here
+
+    with open(config_file, "r") as f:
+        config = yaml.safe_load(f)
+        _port = config["hosts"]["country"].split(":")[-1]
+
+        app.run(port=_port)
