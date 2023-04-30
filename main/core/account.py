@@ -1,8 +1,8 @@
 import threading
-import yaml
-
 from collections import deque
 from datetime import datetime
+
+import yaml
 from flask import Flask, Response, jsonify, request
 from flask_httpauth import HTTPBasicAuth
 from loguru import logger
@@ -17,6 +17,24 @@ users = {
 
 basic_auth = HTTPBasicAuth()
 info_cache = deque(maxlen=7)
+stats = {
+    'time-since-last-request': '-1',
+    'total-request-count': '1',
+    'total-request-browser-count': '1',
+    'requests-in-recent-30': '1'
+}
+
+
+def reset_stats():
+    global stats
+    stats = {
+        'time-since-last-request': '-1',
+        'total-request-count': '1',
+        'total-request-browser-count': '1',
+        'requests-in-recent-30': '1'
+    }
+    logger.info("Statistics cleared")
+    threading.Timer(9, reset_stats).start()
 
 
 @basic_auth.verify_password
@@ -83,18 +101,6 @@ def _check_client():
     info_cache.append(info)
 
     return stats
-
-
-def reset_stats():
-    global stats
-    stats = {
-        'time-since-last-request': '-1',
-        'total-request-count': '1',
-        'total-request-browser-count': '1',
-        'requests-in-recent-30': '1'
-    }
-    logger.info("Statistics cleared")
-    threading.Timer(9, reset_stats).start()
 
 
 if __name__ == '__main__':
