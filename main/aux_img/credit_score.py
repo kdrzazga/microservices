@@ -1,10 +1,13 @@
 import json, requests
 
+import loguru
 from flask import Flask, jsonify
+from datetime import timedelta
 from loguru import logger
 
 SERVICE_NAME = 'CREDIT SCORE'
 app = Flask(__name__)
+loguru.logger.add("credit_score.log", rotation="10 minutes", retention=timedelta(minutes=10))
 
 
 @app.route('/', methods=['GET'])

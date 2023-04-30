@@ -27,7 +27,7 @@ def verify_password(username, password):
 @app.route('/', methods=['GET'])
 def serve_page():
     logger.info("Hello from service " + SERVICE_NAME)
-    return render_template('card_request.html')
+    return render_template('card_request.html'), 200, {'Content-Type': 'text/html'}  # 200 OK
 
 
 @app.route('/read/<card_id>', methods=['GET'])

@@ -25,12 +25,14 @@ Building an image:
 
 ```sh
 docker build -t microservices-img .
+docker build -t microservices-aux .
 ```
 
 Launching:
 
 ```sh
 docker run -p 5955:5955 -p 5957:5957 -p 5981:5981 microservices-img
+docker run -p 6011:6011 microservices-aux
 ```
 
 

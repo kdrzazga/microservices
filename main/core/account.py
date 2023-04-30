@@ -64,7 +64,7 @@ def get_account_info(account_id: int) -> Response:
         for record in content['accounts']:
             logger.info('Record: ' + "|".join([f'{key} : {value}' for key, value in record.items()]))
             if str(record['id']) == account_id:
-                return jsonify(record), 200, {'Content-Type': 'application/json'}
+                return jsonify(record), 200, {'Content-Type': 'application/json'} # 200 - OK
 
     return jsonify({'error': 'Account not found'}), 204, {'Content-Type': 'application/json'}  # 204 - no content
 
