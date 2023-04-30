@@ -14,6 +14,7 @@ users = {
 }
 
 recently_deleted = {}
+protected = {1234}
 
 basic_auth = HTTPBasicAuth()
 
@@ -33,7 +34,7 @@ def serve_page():
 def read_card_old() -> Response:
     message = "Info about cards available at /<card_type>/<card_id>"
     logger.warning(message)
-    return jsonify(message), 308, {'Content-Type': 'application/json'}  # permanent redirect
+    return jsonify(message), 308, {'Content-Type': 'application/json'}  # 308 permanent redirect
 
 
 @app.route('/read/<card_type>/<card_id>', methods=['GET'])
@@ -41,21 +42,40 @@ def read_card_old() -> Response:
 def read_card(card_type: str, card_id: int) -> Response:
     logger.info("Request for " + card_type + " [" + str(card_id) + "]")
 
+    if card_id in recently_deleted:
+        return jsonify("No more information about this card. Must have been deleted recently."), 204, \
+               {'Content-Type': 'application/json'}  # 204 No Content
+
     with open('cards.yml', 'r') as file:
         cards = yaml.safe_load(file)
 
     selected_cards = cards['credit-card'] if card_type == 'credit' else cards['debit-card']
     logger.info("Card data:\n%s", json.dumps(selected_cards, indent=2))
 
-    return jsonify(_get_card_by_id(selected_cards, card_id)), 200, {'Content-Type': 'application/json'}  # OK
+    return jsonify(_get_card_by_id(selected_cards, card_id)), 200, {'Content-Type': 'application/json'}  # 200 OK
 
 
 @app.route('/create/<name>/<customer_name>/<account_ref>', methods=['POST'])
 @basic_auth.login_required
 def create_credit_card(name, customer_name, account_ref, issue_date=None, file_path='cards.yml') -> Response:
     new_id = create_credit_card_service(name, account_ref, customer_name, file_path, issue_date)
+    return jsonify('Card created id=' + str(new_id)), 201, {'Content-Type': 'application/json'}  # 201 Created
 
-    return jsonify('Card created id=' + str(new_id)), 201, {'Content-Type': 'application/json'}
+
+@app.route('/delete/<card-type>/<id>', methods=['DELETE'])
+@basic_auth.login_required
+def delete_credit_card(card_id, card_type) -> Response:
+    if card_id in protected:
+        message = "No authorization to delete card[id = " + str(card_id) + "]. No one can delete it."
+        logger.info(message)
+        return jsonify(message), 405, {'Content-Type': 'application/json'}  # 405 Method Not Allowed
+
+    success = delete_credit_card_service(card_id, card_type)
+
+    if success:
+        recently_deleted.append(card_id)
+
+    return jsonify('Card deleted id=' + str(card_id)), 410, {'Content-Type': 'application/json'}  # 410 Gone
 
 
 def create_credit_card_service(name, account_ref, customer_name, file_path='cards.yml', issue_date=None):
