@@ -13,7 +13,8 @@ def say_hello():
     return 'Microservice %s' % SERVICE_NAME
 
 
-"""
+# TODO
+""" 
 @app.route('/<account_id>', methods=['GET'])
 def get_credit_info(account_id: int):
     logger.info("Received request: Credit Score for account: " + account_id)
