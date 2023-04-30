@@ -1,8 +1,10 @@
-import json, requests
+import json
+from datetime import timedelta
 
 import loguru
+import requests
+import yaml
 from flask import Flask, jsonify
-from datetime import timedelta
 from loguru import logger
 
 SERVICE_NAME = 'CREDIT SCORE'
@@ -16,21 +18,26 @@ def say_hello():
     return 'Microservice %s' % SERVICE_NAME
 
 
-# TODO
-""" 
 @app.route('/<account_id>', methods=['GET'])
 def get_credit_info(account_id: int):
     logger.info("Received request: Credit Score for account: " + account_id)
-    account = requests.get()
-    data = _get_data()
-    country_data = data.get(name)
-    if country_data is None:
-        return jsonify({'error': 'Country not found'}), 404
-    else:
-        logger.info("Country data:\n%s", json.dumps(country_data, indent=2))
+    with open('configuration.yml', 'r') as stream:
+        data = yaml.safe_load(stream)
 
-    return jsonify(country_data)
-"""
+    host = data['hosts']['account']
+    response = requests.get(host + "/" + str(account_id), auth=('admin', 'admin'))
+    if response.status_code == 200:
+        account = response.json()
+    if account is None:
+        return jsonify({'error': 'Account not available.'}), 404, {
+            'Content-Type': 'application/json'}  # 404 - not found
+
+    logger.info("Read info about account:\n" + json.dumps(account, indent=2))
+    logger.info("Account balance: " + str(account['balance']))
+
+    result = int(account['balance']) > 3000
+    return jsonify(result), 200, {'Content-Type': 'application/json'}  # 200 - OK
+
 
 if __name__ == '__main__':
     app.run(port=6011)

@@ -17,22 +17,23 @@ users = {
 
 basic_auth = HTTPBasicAuth()
 info_cache = deque(maxlen=7)
-stats = {
-    'time-since-last-request': '-1',
-    'total-request-count': '1',
-    'total-request-browser-count': '1',
-    'requests-in-recent-30': '1'
-}
 
 
-def reset_stats():
-    global stats
-    stats = {
+def init_stats():
+    return {
         'time-since-last-request': '-1',
         'total-request-count': '1',
         'total-request-browser-count': '1',
         'requests-in-recent-30': '1'
     }
+
+
+stats = init_stats()
+
+
+def reset_stats():
+    global stats
+    stats = init_stats()
     logger.info("Statistics cleared")
     threading.Timer(9, reset_stats).start()
 
@@ -64,7 +65,7 @@ def get_account_info(account_id: int) -> Response:
         for record in content['accounts']:
             logger.info('Record: ' + "|".join([f'{key} : {value}' for key, value in record.items()]))
             if str(record['id']) == account_id:
-                return jsonify(record), 200, {'Content-Type': 'application/json'} # 200 - OK
+                return jsonify(record), 200, {'Content-Type': 'application/json'}  # 200 - OK
 
     return jsonify({'error': 'Account not found'}), 204, {'Content-Type': 'application/json'}  # 204 - no content
 
