@@ -33,6 +33,9 @@ Launching:
 docker run -p 5955:5955 -p 5957:5957 -p 5981:5981 microservices-img
 ```
 
+
+> Note: `resources/microservices-py.postman_collection.json` contains set of REST requests to be imported into Postman
+
 ## License
 
 MIT
