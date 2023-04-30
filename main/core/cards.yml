@@ -1,0 +1,18 @@
+debit-card:
+  - id: 1234
+    name: Mastercard Debit
+    customer-name: Dariusz Doe
+    issue-date: 2022-01-01
+    account-ref: 9876
+  - id: 2345
+    name: Visa Debit
+    customer-name: Alicja Brown
+    issue-date: 2022-03-15
+    account-ref: 3456
+
+credit-card:
+  - id: 5678
+    name: Mastercard Credit
+    customer-name: Marek Kowalski
+    issue-date: 2022-02-01
+    account-ref: 8765

@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "31e986c5-321e-4f97-9951-4097122ac2a9",
+		"name": "microservices-py",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "card_read_card",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5955/read/credit-card/1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5955",
+					"path": [
+						"read",
+						"credit-card",
+						"1234"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "card_info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5955/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5955",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "card_read_card_old",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5955/read/1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5955",
+					"path": [
+						"read",
+						"1234"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "card_create_card",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5955/create/Visa/Marek Kowalski/8765",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5955",
+					"path": [
+						"create",
+						"Visa",
+						"Marek Kowalski",
+						"8765"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "card_create_card Copy",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5955/delete/debit-card/2345",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5955",
+					"path": [
+						"delete",
+						"debit-card",
+						"2345"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "account_read",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5957/3456",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5957",
+					"path": [
+						"3456"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "country_read",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5981/Canada",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5981",
+					"path": [
+						"Canada"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "credit-score info",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:6011/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6011",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

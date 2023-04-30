@@ -1,0 +1,27 @@
+FROM alpine:3.14
+
+# Create a working directory for the Flask app
+WORKDIR /app
+
+# Install dependencies for the Flask app
+RUN apk add --no-cache gcc musl-dev curl
+
+# Install Python 3 and pip
+RUN apk add --no-cache bash python3 py3-pip && \
+    ln -s -f /usr/bin/python3 /usr/bin/python && \
+    ln -s -f /usr/bin/pip3 /usr/bin/pip
+
+# Install required Python packages
+RUN pip install flask loguru # supervisor
+
+# Copy the Flask app code into the container
+COPY aux_img/credit_score.py .
+#COPY credit_score.py .
+
+# Expose port 6011 for the Flask app to listen on
+EXPOSE 6011
+
+# Configure Supervisord
+#COPY supervisord.conf /etc/supervisord.conf
+#CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["python", "credit_score.py"]
