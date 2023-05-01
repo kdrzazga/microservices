@@ -2,6 +2,7 @@ import threading
 from collections import deque
 from datetime import datetime
 
+import requests
 import yaml
 from flask import Flask, Response, jsonify, request
 from flask_httpauth import HTTPBasicAuth
@@ -17,22 +18,23 @@ users = {
 
 basic_auth = HTTPBasicAuth()
 info_cache = deque(maxlen=7)
-stats = {
-    'time-since-last-request': '-1',
-    'total-request-count': '1',
-    'total-request-browser-count': '1',
-    'requests-in-recent-30': '1'
-}
 
 
-def reset_stats():
-    global stats
-    stats = {
+def init_stats():
+    return {
         'time-since-last-request': '-1',
         'total-request-count': '1',
         'total-request-browser-count': '1',
         'requests-in-recent-30': '1'
     }
+
+
+stats = init_stats()
+
+
+def reset_stats():
+    global stats
+    stats = init_stats()
     logger.info("Statistics cleared")
     threading.Timer(9, reset_stats).start()
 
@@ -63,10 +65,29 @@ def get_account_info(account_id: int) -> Response:
         content = yaml.safe_load(file)
         for record in content['accounts']:
             logger.info('Record: ' + "|".join([f'{key} : {value}' for key, value in record.items()]))
+
             if str(record['id']) == account_id:
-                return jsonify(record), 200, {'Content-Type': 'application/json'}
+                record['address']['country'] = read_country(record['address']['city'])
+                result = jsonify(record), 200, {'Content-Type': 'application/json'}  # 200 - OK
+                return result
 
     return jsonify({'error': 'Account not found'}), 204, {'Content-Type': 'application/json'}  # 204 - no content
+
+
+def read_country(city: str) -> str:
+    with open('configuration.yml', 'r') as stream:
+        data = yaml.safe_load(stream)
+
+    host = data['hosts']['country']
+    req = host + "/which_country/" + city
+    logger.info("Request URL: " + req)
+    response = requests.get(req)
+
+    if not response.status_code == 200:
+        logger.error("City/country not found")
+        return ""
+
+    return response.text.strip().replace("\"", "")
 
 
 def _check_client():
@@ -105,4 +126,10 @@ def _check_client():
 
 if __name__ == '__main__':
     reset_stats()
-    app.run(port=5957)
+    _port = 5957
+
+    print("http://localhost:" + str(_port) + "/3456")
+    print("http://localhost:" + str(_port) + "/9876")
+    print("http://localhost:" + str(_port) + "/8765")
+
+    app.run(port=_port)

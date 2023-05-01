@@ -1,0 +1,6 @@
+hosts:
+  country: http://localhost:5981
+  card: http://localhost:5955
+  account: http://localhost:5957
+  credit-score: http://localhost:6011
+  transfer: http://localhost:6012

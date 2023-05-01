@@ -4,19 +4,16 @@ accounts:
     address:
       street: "123 Main St"
       city: "New York"
-      country: "USA"
     balance: 9000.00
   - name: Alicja Brown
     id: 3456
     address:
       street: "456 Maple Ave"
       city: "Los Angeles"
-      country: "USA"
     balance: 3567.05
   - name: Marek Kowalski
     id: 8765
     address:
       street: "Sklodowskiej-Curie 49"
       city: "Namyslow"
-      country: "Poland"
     balance: 2023.04

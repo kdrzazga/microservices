@@ -15,9 +15,20 @@
 -   account: http://localhost:5957
 -   credit-score: http://localhost:6011
 
+```
++---------+       +---------+       +--------------+
+| Country | ----> | Account | ----> | Credit Score |
+|   5981  |       |   5957  |       |     6011     |
++---------+       +---------+       +--------------+
+     ^                                     +-------+
+     |                                     | Cards |
+     +-------------------------------------| 5955  |
+                                           +-------+
+```
+
 ## Installation
 
-Require either Python 3 or Docker to run.
+Requires either Python 3 or Docker
 
 ## How to run
 
@@ -25,12 +36,14 @@ Building an image:
 
 ```sh
 docker build -t microservices-img .
+docker build -t microservices-aux .
 ```
 
 Launching:
 
 ```sh
 docker run -p 5955:5955 -p 5957:5957 -p 5981:5981 microservices-img
+docker run -p 6011:6011 microservices-aux
 ```
 
 
@@ -40,4 +53,4 @@ docker run -p 5955:5955 -p 5957:5957 -p 5981:5981 microservices-img
 
 MIT
 
-**Free Software, Hell Yeah!**
+**Free**
