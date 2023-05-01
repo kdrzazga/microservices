@@ -16,18 +16,19 @@
 -   credit-score: http://localhost:6011
 
 ```
-+---------+       +---------+       +--------------+       +-------+
-| Country | ----> | Account | ----> | Credit.Score |       | Cards |
-|   5981  |       |   5957  |       |     6011     |       |  5955 |
-+---------+       +---------+       +--------------+       +-------+
-     ^                                                          |    
-     |                                                          |     
-     +----------------------------------------------------------+
++---------+       +---------+       +--------------+
+| Country | ----> | Account | ----> | Credit Score |
+|   5981  |       |   5957  |       |     6011     |
++---------+       +---------+       +--------------+
+     ^                                     +-------+
+     |                                     | Cards |
+     +-------------------------------------| 5955  |
+                                           +-------+
 ```
 
 ## Installation
 
-Require either Python 3 or Docker to run.
+Requires either Python 3 or Docker
 
 ## How to run
 
@@ -52,4 +53,4 @@ docker run -p 6011:6011 microservices-aux
 
 MIT
 
-**Free Software, Hell Yeah!**
+**Free**

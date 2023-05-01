@@ -1,3 +1,5 @@
+#docker build -t microservices-img .
+#docker run -p 5955:5955 -p 5957:5957 -p 5981:5981 microservices-img
 FROM alpine:3.14
 
 #ENV FILES_PATH /core
@@ -28,6 +30,8 @@ COPY $FILES_PATH/account.py $DEST_PATH
 COPY $FILES_PATH/card.py $DEST_PATH
 COPY $FILES_PATH/services.conf $DEST_PATH
 COPY $FILES_PATH/services.conf /app
+COPY $FILES_PATH/configuration.yml $DEST_PATH
+COPY $FILES_PATH/configuration.yml /app
 
 # Expose ports 5955, 5957, and 5981 for the Flask apps to listen on
 EXPOSE 5955 5957 5981
