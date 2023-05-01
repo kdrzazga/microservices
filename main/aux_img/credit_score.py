@@ -20,7 +20,7 @@ def say_hello():
 
 @app.route('/<account_id>', methods=['GET'])
 def get_credit_info(account_id: int):
-    logger.info("Received request: Credit Score for account: " + account_id)
+    logger.info("Received request: Credit Score for account: " + str(account_id))
     with open('configuration.yml', 'r') as stream:
         data = yaml.safe_load(stream)
 

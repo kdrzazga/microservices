@@ -15,6 +15,16 @@
 -   account: http://localhost:5957
 -   credit-score: http://localhost:6011
 
+```
++---------+       +---------+       +--------------+       +-------+
+| Country | ----> | Account | ----> | Credit.Score |       | Cards |
+|   5981  |       |   5957  |       |     6011     |       |  5955 |
++---------+       +---------+       +--------------+       +-------+
+     ^                                                          |    
+     |                                                          |     
+     +----------------------------------------------------------+
+```
+
 ## Installation
 
 Require either Python 3 or Docker to run.
