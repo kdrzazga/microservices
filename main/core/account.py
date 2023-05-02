@@ -56,10 +56,12 @@ def get_account_info(account_id: int) -> Response:
     logger.info(SERVICE_NAME + " Getting info about " + str(account_id))
     client_info = _check_client()
     if float(client_info['time-since-last-request']) < 1.7:
-        return jsonify({'error': 'Too many requests. Wait a few seconds'}), 429, {'Content-Type': 'application/json'}
+        return jsonify({'error': 'Too many requests. Wait a few seconds'}), \
+               429, {'Content-Type': 'application/json'}
     elif int(client_info['requests-in-recent-30']) > 8:
-        return jsonify({'error': 'Too early. The requests will not be processed at the moment'}), 425, {
-            'Content-Type': 'application/json'}
+        return jsonify({'error': 'Too early. '
+                                 'The requests will not be processed at the moment'}), 425, {
+                   'Content-Type': 'application/json'}
 
     with open('accounts.yml', 'r') as file:
         content = yaml.safe_load(file)

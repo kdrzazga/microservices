@@ -19,9 +19,11 @@ def find_country(city_name: str):
     all_countries = _get_data()
     for country in all_countries:
         if city_name in all_countries[country]['cities']:
-            return jsonify(country), 200, {'Content-Type': 'application/json'}  # 200 - OK
+            return jsonify(country), 200,\
+                   {'Content-Type': 'application/json'}  # 200 - OK
 
-    return jsonify("City not found. It can still exists though, just not in our database."), 204, {
+    return jsonify("City not found. It can still exists though,"
+                   " just not in our database."), 204, {
         'Content-Type': 'application/json'}  # 204 - no content
 
 

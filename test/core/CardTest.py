@@ -3,7 +3,7 @@ import unittest
 from datetime import datetime
 from loguru import logger
 
-from main.core.card import create_credit_card_service, delete_credit_card_service
+from main.core.card import create_credit_card_service, del_credit_card_srv
 
 
 class CardTest(unittest.TestCase):
@@ -23,7 +23,7 @@ class CardTest(unittest.TestCase):
         logger.info("Created " + card_type + " with id = " + str(new_id))
         logger.info("Deleting " + str(new_id) + "...")
         # clean up
-        delete_credit_card_service(new_id, card_type, file_path)
+        del_credit_card_srv(new_id, card_type, file_path)
 
 
 if __name__ == '__main__':

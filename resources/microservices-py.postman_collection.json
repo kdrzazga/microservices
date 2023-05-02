@@ -231,14 +231,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5957/3456",
+					"raw": "http://localhost:5957/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5957",
 					"path": [
-						"3456"
+						""
 					]
 				}
 			},
@@ -275,14 +275,42 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:6011/",
+					"raw": "http://127.0.0.1:6011/",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"127",
+						"0",
+						"0",
+						"1"
 					],
 					"port": "6011",
 					"path": [
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "credit-score 4account",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:6011/3456",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "6011",
+					"path": [
+						"3456"
 					]
 				}
 			},

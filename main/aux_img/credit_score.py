@@ -23,6 +23,7 @@ def say_hello():
 
 @app.route('/<account_id>', methods=['GET'])
 def get_credit_info(account_id: int):
+    global account
     logger.info("Received request: Credit Score for account: " + str(account_id))
     _check_account_service()
     url = accounts_host + "/" + str(account_id)

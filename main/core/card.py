@@ -27,7 +27,7 @@ def verify_password(username, password):
 @app.route('/', methods=['GET'])
 def serve_page():
     logger.info("Hello from service " + SERVICE_NAME)
-    return render_template('card_request.html'), 200, {'Content-Type': 'text/html'}  # 200 OK
+    return render_template('card_requests.html'), 200, {'Content-Type': 'text/html'}  # 200 OK
 
 
 @app.route('/read/<card_id>', methods=['GET'])
@@ -66,11 +66,12 @@ def create_credit_card(name, customer_name, account_ref, issue_date=None, file_p
 @basic_auth.login_required
 def delete_card(card_id, card_type) -> Response:
     if card_id in protected:
-        message = "No authorization to delete card[id = " + str(card_id) + "]. No one can delete it."
+        message = "No authorization to delete card[id = " \
+                  + str(card_id) + "]. No one can delete it."
         logger.info(message)
         return jsonify(message), 405, {'Content-Type': 'application/json'}  # 405 Method Not Allowed
 
-    success = delete_credit_card_service(card_id, card_type)
+    success = del_credit_card_srv(card_id, card_type)
 
     if success:
         recently_deleted.append(card_id)
@@ -91,7 +92,7 @@ def create_credit_card_service(name, account_ref, customer_name, file_path='card
     if issue_date is None:
         issue_date = datetime.now().strftime('%Y-%m-%d')
 
-    # Create a new credit card dictionary with the assigned ID and default issue date
+    # Create a new credit card dict with assigned ID and default issue date
     new_card = {'id': new_id,
                 'name': name,
                 'customer-name': customer_name,
@@ -107,7 +108,7 @@ def create_credit_card_service(name, account_ref, customer_name, file_path='card
     return new_id
 
 
-def delete_credit_card_service(card_id, card_type='credit-card', file_path='cards.yml'):
+def del_credit_card_srv(card_id, card_type='credit-card', file_path='cards.yml'):
     # Load the YAML file
     with open(file_path, 'r') as file:
         data = yaml.load(file, Loader=yaml.FullLoader)
